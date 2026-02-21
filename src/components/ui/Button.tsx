@@ -10,7 +10,22 @@ interface ButtonProps {
   external?: boolean;
   onClick?: () => void;
   type?: "button" | "submit";
+  noIcon?: boolean;
 }
+
+const ArrowIcon = () => (
+  <span className="btn-arrow inline-flex overflow-hidden">
+    <svg
+      className="w-4 h-4 shrink-0 ml-2"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    </svg>
+  </span>
+);
 
 export default function Button({
   href,
@@ -20,9 +35,10 @@ export default function Button({
   external = false,
   onClick,
   type = "button",
+  noIcon = false,
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide transition-all duration-200 rounded-sm";
+    "group/btn inline-flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide transition-all duration-300 rounded-sm overflow-hidden";
 
   const variants = {
     primary:
@@ -34,6 +50,14 @@ export default function Button({
   };
 
   const styles = `${baseStyles} ${variants[variant]} ${className}`;
+  const showArrow = variant !== "ghost" && !noIcon;
+
+  const content = (
+    <>
+      <span>{children}</span>
+      {showArrow && <ArrowIcon />}
+    </>
+  );
 
   if (href) {
     if (external) {
@@ -44,20 +68,20 @@ export default function Button({
           target="_blank"
           rel="noopener noreferrer"
         >
-          {children}
+          {content}
         </a>
       );
     }
     return (
       <Link href={href} className={styles}>
-        {children}
+        {content}
       </Link>
     );
   }
 
   return (
     <button type={type} className={styles} onClick={onClick}>
-      {children}
+      {content}
     </button>
   );
 }

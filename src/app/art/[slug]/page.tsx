@@ -26,11 +26,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArtDetailPage({ params }: Props) {
   const { slug } = await params;
-  const piece = artPieces.find((p) => p.slug === slug);
+  const index = artPieces.findIndex((p) => p.slug === slug);
 
-  if (!piece) {
+  if (index === -1) {
     notFound();
   }
 
-  return <ArtDetailClient piece={piece} />;
+  const piece = artPieces[index];
+  const prevPiece = index > 0 ? { slug: artPieces[index - 1].slug, title: artPieces[index - 1].title } : null;
+  const nextPiece = index < artPieces.length - 1 ? { slug: artPieces[index + 1].slug, title: artPieces[index + 1].title } : null;
+
+  return <ArtDetailClient piece={piece} prevItem={prevPiece} nextItem={nextPiece} />;
 }

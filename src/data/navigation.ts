@@ -7,8 +7,8 @@ export const navLinks = [
 
 export const socialLinks = {
   email: "mailto:sabrina@feld.com",
-  linkedin: "https://www.linkedin.com/in/sabrinafeld",
-  instagram: "https://www.instagram.com/sabrinafeld",
+  linkedin: "https://www.linkedin.com/in/sabrina-feld/",
+  instagram: "https://www.instagram.com/subs_10/",
 };
 
 export const footerLinks = [

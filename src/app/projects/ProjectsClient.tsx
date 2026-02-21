@@ -7,23 +7,19 @@ import { projects } from "@/data/projects";
 export default function ProjectsClient() {
   return (
     <section className="py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      <div className="max-w-7xl mx-auto px-5 md:px-20">
         <FadeIn>
-          <h1 className="text-4xl md:text-5xl font-light text-gray-900 mb-4">
+          <h1 className="text-3xl md:text-7xl font-light text-gray-900 mb-10 md:mb-16">
             Past Projects
           </h1>
-          <p className="text-lg text-gray-500 mb-16 max-w-2xl">
-            Product management, design, visual storytelling, and creative work
-            across startups and academia.
-          </p>
         </FadeIn>
 
-        <div className="space-y-20">
+        <div className="space-y-6">
           {projects.map((project, i) => (
             <div key={project.slug}>
               <ProjectCard project={project} index={i} />
               {i < projects.length - 1 && (
-                <div className="border-t border-gray-100 mt-20" />
+                <div className="border-t border-gray-100 mt-6" />
               )}
             </div>
           ))}

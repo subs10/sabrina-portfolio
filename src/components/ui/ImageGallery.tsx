@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ImageGalleryProps {
@@ -10,104 +10,252 @@ interface ImageGalleryProps {
 }
 
 export default function ImageGallery({ images, alt }: ImageGalleryProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const goNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const goPrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  const lightboxNext = useCallback(() => {
+    setLightboxIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const lightboxPrev = useCallback(() => {
+    setLightboxIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
+
+  const openLightbox = useCallback((index: number) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  }, []);
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (lightboxOpen) {
+        if (e.key === "ArrowRight") lightboxNext();
+        else if (e.key === "ArrowLeft") lightboxPrev();
+        else if (e.key === "Escape") setLightboxOpen(false);
+      } else {
+        if (e.key === "ArrowRight") goNext();
+        else if (e.key === "ArrowLeft") goPrev();
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [goNext, goPrev, lightboxNext, lightboxPrev, lightboxOpen]);
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    if (lightboxOpen) {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = ""; };
+    }
+  }, [lightboxOpen]);
 
   return (
     <>
-      {/* Grid */}
-      <div className={`grid gap-4 ${images.length === 1 ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"}`}>
+      {/* ===== MOBILE: vertical stack — all images visible ===== */}
+      <div className="md:hidden space-y-3 -mx-5">
         {images.map((src, i) => (
-          <motion.div
+          <div
             key={src}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            className="relative cursor-pointer group"
-            onClick={() => setSelectedIndex(i)}
-            data-cursor-hover
+            className="relative w-full rounded-none overflow-hidden"
           >
-            <div className={`relative ${images.length === 1 ? "aspect-auto" : "aspect-[4/3]"}`}>
-              <Image
-                src={src}
-                alt={`${alt} - ${i + 1}`}
-                fill={images.length > 1}
-                width={images.length === 1 ? 1200 : undefined}
-                height={images.length === 1 ? 800 : undefined}
-                className={`${images.length > 1 ? "object-cover" : "w-full h-auto"} rounded-sm transition-all duration-300 group-hover:shadow-lg`}
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 border-2 border-transparent transition-colors duration-300 group-hover:border-buttercup/30 rounded-sm" />
-            </div>
-          </motion.div>
+            <Image
+              src={src}
+              alt={`${alt} - ${i + 1}`}
+              width={1200}
+              height={900}
+              className="w-full h-auto"
+              sizes="100vw"
+            />
+          </div>
         ))}
+        {images.length > 1 && (
+          <p className="text-center text-sm text-gray-400 px-5">
+            {images.length} images
+          </p>
+        )}
       </div>
 
-      {/* Lightbox */}
+      {/* ===== DESKTOP: carousel with thumbnails ===== */}
+      <div className="hidden md:block">
+        {/* Main image display */}
+        <div className="flex justify-center">
+          <div className="relative w-full max-h-[80vh] aspect-[4/3] rounded-sm overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="absolute inset-0"
+                style={{ willChange: "opacity" }}
+              >
+                <Image
+                  src={images[currentIndex]}
+                  alt={`${alt} - ${currentIndex + 1}`}
+                  fill
+                  className="object-contain bg-gray-50"
+                  sizes="700px"
+                />
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Three-zone click: left=prev, center=expand, right=next */}
+            {images.length > 1 ? (
+              <>
+                <button
+                  className="absolute left-0 top-0 w-1/3 h-full z-10 cursor-gallery-prev"
+                  onClick={goPrev}
+                  aria-label="Previous image"
+                />
+                <button
+                  className="absolute left-1/3 top-0 w-1/3 h-full z-10 cursor-gallery-zoom"
+                  onClick={() => openLightbox(currentIndex)}
+                  aria-label="Expand image"
+                />
+                <button
+                  className="absolute right-0 top-0 w-1/3 h-full z-10 cursor-gallery-next"
+                  onClick={goNext}
+                  aria-label="Next image"
+                />
+              </>
+            ) : (
+              <button
+                className="absolute inset-0 z-10 cursor-gallery-zoom"
+                onClick={() => openLightbox(0)}
+                aria-label="Expand image"
+              />
+            )}
+
+            {/* Subtle side arrows */}
+            {images.length > 1 && (
+              <>
+                <div className="absolute left-3 top-1/2 -translate-y-1/2 z-[5] pointer-events-none text-gray-400/50">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </div>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 z-[5] pointer-events-none text-gray-400/50">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Thumbnail strip */}
+        {images.length > 1 && (
+          <div className="flex gap-1.5 mt-3 justify-center flex-wrap">
+            {images.map((src, i) => (
+              <button
+                key={src}
+                onClick={() => setCurrentIndex(i)}
+                className={`relative flex-shrink-0 w-10 h-10 rounded-sm overflow-hidden transition-all duration-200 ${
+                  i === currentIndex
+                    ? "ring-2 ring-buttercup opacity-100"
+                    : "opacity-40 hover:opacity-70"
+                }`}
+                aria-label={`View image ${i + 1}`}
+              >
+                <Image
+                  src={src}
+                  alt={`${alt} thumbnail ${i + 1}`}
+                  fill
+                  className="object-cover"
+                  sizes="40px"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Image counter */}
+        {images.length > 1 && (
+          <p className="text-center text-sm text-gray-400 mt-1.5">
+            {currentIndex + 1} / {images.length}
+          </p>
+        )}
+      </div>
+
+      {/* ===== LIGHTBOX (shared between mobile & desktop) ===== */}
       <AnimatePresence>
-        {selectedIndex !== null && (
+        {lightboxOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 md:p-8"
-            onClick={() => setSelectedIndex(null)}
-            style={{ cursor: "auto" }}
+            className="fixed inset-0 z-50 bg-black/90"
+            onClick={() => setLightboxOpen(false)}
           >
+            {/* X close button */}
             <button
-              className="absolute top-6 right-6 text-white/80 hover:text-buttercup text-3xl z-10 transition-colors"
-              onClick={() => setSelectedIndex(null)}
-              style={{ cursor: "none" }}
+              className="absolute top-4 right-4 md:top-6 md:right-6 z-20 text-white/60 hover:text-white transition-colors"
+              onClick={() => setLightboxOpen(false)}
+              aria-label="Close"
             >
-              &times;
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
 
-            {/* Nav arrows */}
             {images.length > 1 && (
               <>
                 <button
-                  className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/60 hover:text-buttercup text-4xl z-10 transition-colors"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedIndex((selectedIndex - 1 + images.length) % images.length);
-                  }}
-                  style={{ cursor: "none" }}
+                  className="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-20 transition-colors w-10 h-10 md:w-auto md:h-auto rounded-full md:rounded-none bg-white/10 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none flex items-center justify-center md:block md:text-4xl"
+                  onClick={(e) => { e.stopPropagation(); lightboxPrev(); }}
+                  aria-label="Previous image"
                 >
-                  &lsaquo;
+                  <svg className="w-5 h-5 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                  <span className="hidden md:inline">&lsaquo;</span>
                 </button>
                 <button
-                  className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/60 hover:text-buttercup text-4xl z-10 transition-colors"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedIndex((selectedIndex + 1) % images.length);
-                  }}
-                  style={{ cursor: "none" }}
+                  className="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-20 transition-colors w-10 h-10 md:w-auto md:h-auto rounded-full md:rounded-none bg-white/10 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none flex items-center justify-center md:block md:text-4xl"
+                  onClick={(e) => { e.stopPropagation(); lightboxNext(); }}
+                  aria-label="Next image"
                 >
-                  &rsaquo;
+                  <svg className="w-5 h-5 md:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                  <span className="hidden md:inline">&rsaquo;</span>
                 </button>
               </>
             )}
 
             <motion.div
-              key={selectedIndex}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              key={lightboxIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="relative max-w-5xl max-h-[85vh] w-full"
+              className="absolute inset-0 m-4 md:m-16"
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={images[selectedIndex]}
-                alt={`${alt} - ${selectedIndex + 1}`}
-                width={1600}
-                height={1200}
-                className="w-full h-auto max-h-[85vh] object-contain rounded-sm"
+                src={images[lightboxIndex]}
+                alt={`${alt} - ${lightboxIndex + 1}`}
+                fill
+                className="object-contain"
+                sizes="100vw"
               />
-              <p className="text-center text-white/50 text-sm mt-4">
-                {selectedIndex + 1} / {images.length}
-              </p>
             </motion.div>
+            {images.length > 1 && (
+              <p className="absolute bottom-4 left-0 right-0 text-center text-white/50 text-sm z-20">
+                {lightboxIndex + 1} / {images.length}
+              </p>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,3 +1,9 @@
+export interface Slide {
+  title: string;
+  description: string;
+  image: string;
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -9,6 +15,10 @@ export interface Project {
   coverImage: string;
   secondaryImage?: string;
   videoUrl?: string;
+  youtubeUrl?: string;
+  images?: string[];
+  slides?: Slide[];
+  imagesOnly?: boolean;
   caseStudy: {
     overview: string;
     role: string;
@@ -57,7 +67,6 @@ export const projects: Project[] = [
         "Market Expansion: Hosted Scanner opened StackHawk to enterprise customers who had been blocked by pipeline or YAML requirements, creating a new adoption path for teams not ready to shift left immediately.",
         "Competitive Positioning: Enabled StackHawk to compete against vendors offering only hosted scanning, which we\u2019d previously been losing deals to.",
         "Customer Flexibility: Gave existing StackHawk customers a secondary capability for specific scenarios\u2014legacy apps, acquisitions, compliance scans\u2014that supplemented their pipeline-first workflows without replacing them.",
-        "Onboarding Insight: Customer feedback revealed that Hosted Scanner could serve as an onboarding tool, letting new customers run baseline scans immediately while setting up CI/CD integration. This insight is now shaping future roadmap decisions.",
       ],
       learnings:
         "Operating in Ambiguity: Coordinating multiple teams during a fast-paced launch meant adapting quickly, asking the right questions, and anticipating what teams needed before blockers emerged. I learned to work effectively when information was incomplete and priorities were shifting.\n\nDocumentation as Enablement: Clear, accessible documentation was critical to keeping teams aligned. I learned to structure information differently for engineering, sales, and leadership\u2014same facts, different formats based on what each group needed to act on.\n\nAI-Assisted Workflows: I utilized AI tools to draft and refine internal product documentation, iterating on structure and language to better support the team.",
@@ -135,6 +144,7 @@ export const projects: Project[] = [
     ],
     coverImage: "/images/projects/hawkai-video/cover.jpg",
     videoUrl: "/images/projects/hawkai-video/promo-video.mp4",
+    youtubeUrl: "https://www.youtube.com/embed/6WE_v63gFDA",
     caseStudy: {
       overview:
         "HawkAI is StackHawk\u2019s AI-powered API discovery feature that automatically identifies and catalogs APIs across applications, eliminating the manual work of documenting endpoints and helping security teams understand their API attack surface. The feature launch in 2024 represented a major product milestone, introducing machine learning capabilities that could detect APIs even in complex, undocumented codebases.\n\nAs the centerpiece of the marketing campaign, I created a promotional video that brought energy and personality to a highly technical feature. The video premiered across all social media channels and played a role in setting the creative tone for the launch.",
@@ -184,6 +194,10 @@ export const projects: Project[] = [
     ],
     coverImage: "/images/projects/scripps-journal/cover.jpg",
     secondaryImage: "/images/projects/scripps-journal/secondary.jpg",
+    images: [
+      "/images/projects/scripps-journal/cover.jpg",
+      "/images/projects/scripps-journal/secondary.jpg",
+    ],
     caseStudy: {
       overview:
         "The Scripps College Journal is the college\u2019s annually published literary journal, showcasing student works in creative nonfiction, fiction, poetry, and visual art. As Layout Editor, I was the sole designer responsible for the 2025 edition\u2014a 50+ page publication featuring work from 20+ artists selected through a highly competitive submission process.\n\nI owned the complete design process: establishing layout standards, designing every page, creating the cover and spine, collaborating with artists to preserve their creative visions, and coordinating with the publisher for print production. The project required 40+ hours of hands-on layout work and culminated in an open mic launch event for over 100 attendees.",
@@ -236,7 +250,10 @@ export const projects: Project[] = [
       "Produced a range of digital design assets including ad campaigns, social media graphics, and website landing and login pages, focusing on clarity, usability, and brand consistency.",
     tags: ["UI design", "digital marketing assets", "figma", "web interfaces"],
     coverImage: "/images/projects/selected-design/cover.png",
-    secondaryImage: "/images/projects/selected-design/secondary.png",
+    images: [
+      "/images/projects/selected-design/cover.png",
+    ],
+    imagesOnly: true,
     caseStudy: {
       overview:
         "A collection of design projects created to build skills, explore new techniques, and support real-world marketing and product needs. These pieces represent ongoing learning and experimentation across different formats and design challenges.",

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
 import type { ArtPiece } from "@/data/art";
 
 interface ArtCardProps {
@@ -11,12 +11,33 @@ interface ArtCardProps {
 }
 
 export default function ArtCard({ piece, index }: ArtCardProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
+    <div
+      ref={ref}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "none" : "translateY(20px)",
+        transition: `opacity 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) ${index * 0.08}s, transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) ${index * 0.08}s`,
+      }}
     >
       <Link
         href={`/art/${piece.slug}`}
@@ -24,7 +45,7 @@ export default function ArtCard({ piece, index }: ArtCardProps) {
         data-cursor-hover
       >
         <div className="relative overflow-hidden rounded-sm">
-          <div className="aspect-[3/4] relative">
+          <div className="aspect-[4/5] relative">
             <Image
               src={piece.coverImage}
               alt={piece.title}
@@ -51,6 +72,6 @@ export default function ArtCard({ piece, index }: ArtCardProps) {
           </p>
         </div>
       </Link>
-    </motion.div>
+    </div>
   );
 }

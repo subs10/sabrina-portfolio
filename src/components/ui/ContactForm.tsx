@@ -33,7 +33,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-lg">
+    <form onSubmit={handleSubmit} className="space-y-6 w-full">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">
@@ -44,7 +44,7 @@ export default function ContactForm() {
             id="firstName"
             name="firstName"
             required
-            className="w-full px-4 py-3 border border-gray-200 rounded-sm text-sm bg-white focus:outline-none focus:border-buttercup transition-colors"
+            className="w-full px-4 py-3 border border-gray-200 rounded-sm text-base md:text-sm bg-white focus:outline-none focus:border-buttercup transition-colors"
           />
         </div>
         <div>
@@ -56,7 +56,7 @@ export default function ContactForm() {
             id="lastName"
             name="lastName"
             required
-            className="w-full px-4 py-3 border border-gray-200 rounded-sm text-sm bg-white focus:outline-none focus:border-buttercup transition-colors"
+            className="w-full px-4 py-3 border border-gray-200 rounded-sm text-base md:text-sm bg-white focus:outline-none focus:border-buttercup transition-colors"
           />
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function ContactForm() {
           id="email"
           name="email"
           required
-          className="w-full px-4 py-3 border border-gray-200 rounded-sm text-sm bg-white focus:outline-none focus:border-buttercup transition-colors"
+          className="w-full px-4 py-3 border border-gray-200 rounded-sm text-base md:text-sm bg-white focus:outline-none focus:border-buttercup transition-colors"
         />
       </div>
       <div>
@@ -82,10 +82,10 @@ export default function ContactForm() {
           name="message"
           rows={5}
           required
-          className="w-full px-4 py-3 border border-gray-200 rounded-sm text-sm bg-white focus:outline-none focus:border-buttercup transition-colors resize-none"
+          className="w-full px-4 py-3 border border-gray-200 rounded-sm text-base md:text-sm bg-white focus:outline-none focus:border-buttercup transition-colors resize-none"
         />
       </div>
-      <Button type="submit" variant="primary">
+      <Button type="submit" variant="primary" noIcon>
         Send Message
       </Button>
     </form>

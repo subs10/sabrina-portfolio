@@ -26,11 +26,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectDetailPage({ params }: Props) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const index = projects.findIndex((p) => p.slug === slug);
 
-  if (!project) {
+  if (index === -1) {
     notFound();
   }
 
-  return <ProjectDetailClient project={project} />;
+  const project = projects[index];
+  const prevProject = index > 0 ? { slug: projects[index - 1].slug, title: projects[index - 1].title } : null;
+  const nextProject = index < projects.length - 1 ? { slug: projects[index + 1].slug, title: projects[index + 1].title } : null;
+
+  return <ProjectDetailClient project={project} prevItem={prevProject} nextItem={nextProject} />;
 }
