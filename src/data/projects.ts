@@ -19,6 +19,7 @@ export interface Project {
   images?: string[];
   slides?: Slide[];
   imagesOnly?: boolean;
+  hideLearnings?: boolean;
   caseStudy: {
     overview: string;
     role: string;
@@ -30,6 +31,8 @@ export interface Project {
     relatedSkills: string[];
     stats?: string[];
     externalLink?: { label: string; url: string };
+    bulletRoleDetails?: boolean;
+    listImpact?: boolean;
   };
 }
 
@@ -237,6 +240,67 @@ export const projects: Project[] = [
         "20+ featured artists",
         "40+ hours of production",
         "100+ attendees at launch event",
+      ],
+    },
+  },
+  {
+    slug: "building-this-website",
+    title: "Building This Website",
+    category: "Design + Development",
+    organization: "Personal",
+    year: "2025\u20132026",
+    description:
+      "Designed, coded, and hosted with AI, all from scratch.",
+    tags: [
+      "vibe-coding",
+      "AI-assisted development",
+      "creative direction",
+      "UI/UX design",
+      "front-end development",
+    ],
+    coverImage: "/images/projects/building-this-website/cover.jpg",
+    hideLearnings: true,
+    caseStudy: {
+      overview:
+        "My previous portfolio wasn\u2019t telling the full story. I needed something that could hold **three very different bodies of work** (product management, design, and fine art) and still feel cohesive and distinctly mine.\n\nRather than defaulting to Squarespace or Framer, I decided to build it myself using **Claude Code**. I\u2019d been watching vibe-coding become a real workflow in design and product environments. Using AI tools fluently isn\u2019t a shortcut anymore, it\u2019s a skill. I wanted to prove to myself that I could lead a full technical build end-to-end, even without an extensive engineering background.\n\nThe result is a fully custom, self-hosted website that I designed, directed, and shipped **solo, over 11 days**.",
+      role: "The result is a fully custom Next.js site. No templates, no drag-and-drop builders, just clean code I understand and can maintain. Every page, interaction, and visual detail was a deliberate choice.",
+      roleDetails: [
+        "6 page templates (Home, Projects, Art, About, Contact, Case Studies)",
+        "Custom image carousel with lightbox full-screen expand",
+        "Scroll-triggered fade animations (Framer Motion)",
+        "Interactive hero text with cursor-reactive distortion",
+        "Frosted glass navigation header",
+        "Fully responsive across mobile and desktop",
+        "Reusable component library (Nav, Footer, ProjectCard, ImageLightbox)",
+        "Self-hosted on Netlify \u2014 no ongoing platform fees",
+      ],
+      bulletRoleDetails: true,
+      challenge:
+        "**Communicating design intent without code vocabulary:** I don\u2019t write CSS. So I had to get precise in other ways. I referenced sites I liked, describing the feeling of an interaction, explaining what was wrong with what I was seeing in the browser. This pushed me to develop a much sharper design vocabulary. \u201CThe yellow isn\u2019t readable\u201D became \u201Cmatch the header yellow to the gold in the page body hover states.\u201D\n\n**Debugging as a non-developer:** When something broke, I couldn\u2019t read the error and fix it directly. I had to describe symptoms clearly, share screenshots, and trust the iteration process. This was frustrating at times, but it taught me a lot about how design decisions translate (or don\u2019t) into code. I got faster at identifying root causes by the end.\n\n**Staying the creative director:** The biggest challenge wasn\u2019t technical, it was staying in the driver\u2019s seat rather than reacting to whatever the AI produced. The best outputs came when I arrived with strong opinions. The weakest moments were when I asked Claude to \u201Cmake it look better\u201D without knowing what better meant to me. The tool is only as good as the direction behind it.",
+      approach:
+        "**Phase 1, Foundation & Creative Direction:** Before writing any code, I had to figure out what I wanted the site to feel like. I gathered reference sites, prepared my content, and came into the build with a clear creative vision: warm tones pulled from my artwork, a clean editorial layout for the projects section, and interactions with genuine personality. I used my existing project case studies as **context documents** so Claude always had a full picture of my work and voice.\n\n**Phase 2, Page by Page:** I worked through the site section by section \u2014 home, projects, art, about, contact \u2014 iterating on each until it felt right before moving forward. The projects pages needed structured case study formatting with enough visual breathing room to let the work speak. The art pages needed a gallery experience that felt more like a museum than a portfolio grid. This phase was the most iterative. I would describe what I wanted, see the result in the browser, and redirect with precision. Every detail went through **multiple rounds**, from cursor behavior to scroll animations and hover states. I logged **20+ distinct feedback sessions** across the **11 days**.\n\n**Phase 3, Polish & the Details:** The last stretch was the hardest and the most satisfying. Getting scroll animations to trigger correctly at all scroll speeds. Making the lightbox image expansion feel seamless. Matching the exact yellow across the header and page body. Ensuring the contact page read cleanly on mobile. These aren\u2019t glamorous problems, but solving them is the difference between a rough prototype and something I am proud to share.",
+      impact: [
+        "**Strong opinions make better AI outputs.** The more specific and directional I was, the better the results. Vague prompts produced generic designs. Clear creative conviction produced something that felt like mine.",
+        "**AI doesn\u2019t eliminate iteration, it makes each iteration faster.** I still went through dozens of rounds on the scroll animations, the nav header, the contact page. The difference is that each round took minutes instead of days.",
+        "**Shipping teaches you things planning can\u2019t.** Seeing the site in a real browser, on my phone, at different screen sizes is where the real design work happened. No amount of planning would have surfaced the issues I found by actually using the thing.",
+        "**This is the future of building.** Not because AI replaces designers or developers, but because the gap between \u201CI have an idea\u201D and \u201CI have a website\u201D is getting shorter. Knowing how to close that gap \u2014 with taste, direction, and persistence \u2014 is a real and growing skill.",
+      ],
+      listImpact: true,
+      learnings:
+        "This project took more time than I expected and produced something better than I planned for. I came in wanting to prove I could use AI tools. I left having built a site that holds my full range of work and feels like a real extension of how I think and make.",
+      relatedSkills: [
+        "Vibe-Coding",
+        "AI-Assisted Development",
+        "Creative Direction",
+        "UI/UX Design",
+        "Front-End Development",
+        "Product Thinking",
+      ],
+      stats: [
+        "4\u20136 hrs active build time",
+        "11 days start to finish",
+        "20+ feedback sessions",
+        "6 page templates built",
       ],
     },
   },

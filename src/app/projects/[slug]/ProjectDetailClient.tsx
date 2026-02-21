@@ -20,9 +20,24 @@ interface Props {
 }
 
 function parseStatParts(stat: string): { number: string; label: string } {
-  const match = stat.match(/^([\d,]+\+?)\s+(.+)$/);
+  const match = stat.match(/^([\d,]+(?:\s*[–\-]\s*[\d,]+)?\+?(?:\s*(?:hrs?|days?))?)\s+(.+)$/);
   if (match) return { number: match[1], label: match[2] };
   return { number: stat, label: "" };
+}
+
+/** Renders **bold** markdown within text */
+function RichText({ text, className }: { text: string; className?: string }) {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return (
+    <span className={className}>
+      {parts.map((part, i) => {
+        if (part.startsWith("**") && part.endsWith("**")) {
+          return <strong key={i} className="text-gray-900 font-semibold">{part.slice(2, -2)}</strong>;
+        }
+        return <span key={i}>{part}</span>;
+      })}
+    </span>
+  );
 }
 
 /** Highlights numbers and key phrases within text */
@@ -373,19 +388,29 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                 </h2>
                 {cs.overview.split("\n\n").map((para, i) => (
                   <p key={i} className="text-gray-600 leading-relaxed mb-4 text-lg">
-                    <HighlightedText text={para} />
+                    <RichText text={para} />
                   </p>
                 ))}
               </div>
             </FadeIn>
 
-            {/* My Role */}
+            {/* My Role / What I Built */}
             <FadeIn>
               <div>
                 <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide mb-6">
-                  My Role
+                  {cs.bulletRoleDetails ? "What I Built" : "My Role"}
                 </h2>
-                <p className="text-gray-600 leading-relaxed mb-6 text-lg font-medium">{cs.role}</p>
+                <p className="text-gray-600 leading-relaxed mb-6 text-lg font-medium"><RichText text={cs.role} /></p>
+                {cs.bulletRoleDetails ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3">
+                    {cs.roleDetails.map((detail, i) => (
+                      <div key={i} className="flex items-start gap-2.5 text-gray-600">
+                        <span className="mt-[7px] w-2 h-2 rounded-full bg-buttercup flex-shrink-0" />
+                        <span className="text-base leading-snug">{detail}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
                 <div className="space-y-5">
                   {cs.roleDetails.map((detail, i) => {
                     const colonIndex = detail.indexOf(":");
@@ -393,7 +418,7 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                       const title = detail.slice(0, colonIndex);
                       const body = detail.slice(colonIndex + 1);
                       return (
-                        <div key={i} className="pl-5 pl-5 border-l-2 border-gray-200 py-3 pr-5">
+                        <div key={i} className="pl-5 border-l-2 border-gray-200 py-3 pr-5">
                           <h4 className="font-bold text-gray-900 mb-1">{title}</h4>
                           <p className="text-gray-600 leading-relaxed">
                             <HighlightedText text={body.trim()} />
@@ -402,7 +427,7 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                       );
                     }
                     return (
-                      <div key={i} className="pl-5 pl-5 border-l-2 border-gray-200 py-3 pr-5">
+                      <div key={i} className="pl-5 border-l-2 border-gray-200 py-3 pr-5">
                         <p className="text-gray-600 leading-relaxed">
                           <HighlightedText text={detail} />
                         </p>
@@ -410,6 +435,7 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                     );
                   })}
                 </div>
+                )}
               </div>
             </FadeIn>
 
@@ -419,11 +445,28 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                 <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide mb-6">
                   The Challenge
                 </h2>
-                {cs.challenge.split("\n\n").map((para, i) => (
-                  <p key={i} className="text-gray-600 leading-relaxed mb-4 text-lg">
-                    <HighlightedText text={para} />
-                  </p>
-                ))}
+                <div className="space-y-6">
+                  {cs.challenge.split("\n\n").map((para, i) => {
+                    const boldMatch = para.match(/^\*\*(.+?)\*\*\s*/);
+                    if (boldMatch) {
+                      const heading = boldMatch[1];
+                      const body = para.slice(boldMatch[0].length);
+                      return (
+                        <div key={i}>
+                          <h4 className="font-bold text-gray-900 mb-2">{heading}</h4>
+                          <p className="text-gray-600 leading-relaxed">
+                            <RichText text={body} />
+                          </p>
+                        </div>
+                      );
+                    }
+                    return (
+                      <p key={i} className="text-gray-600 leading-relaxed text-lg">
+                        <RichText text={para} />
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
             </FadeIn>
 
@@ -433,11 +476,28 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                 <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide mb-6">
                   Approach
                 </h2>
-                {cs.approach.split("\n\n").map((para, i) => (
-                  <p key={i} className="text-gray-600 leading-relaxed mb-4 text-lg">
-                    <HighlightedText text={para} />
-                  </p>
-                ))}
+                <div className="space-y-6">
+                  {cs.approach.split("\n\n").map((para, i) => {
+                    const boldMatch = para.match(/^\*\*(.+?)\*\*\s*/);
+                    if (boldMatch) {
+                      const heading = boldMatch[1];
+                      const body = para.slice(boldMatch[0].length);
+                      return (
+                        <div key={i}>
+                          <h4 className="font-bold text-gray-900 mb-2">{heading}</h4>
+                          <p className="text-gray-600 leading-relaxed">
+                            <RichText text={body} />
+                          </p>
+                        </div>
+                      );
+                    }
+                    return (
+                      <p key={i} className="text-gray-600 leading-relaxed text-lg">
+                        <RichText text={para} />
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
             </FadeIn>
 
@@ -462,6 +522,18 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                 <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide mb-6">
                   Impact &amp; Outcomes
                 </h2>
+                {cs.listImpact ? (
+                  <div className="space-y-5">
+                    {cs.impact.map((item, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-buttercup flex-shrink-0" />
+                        <p className="text-gray-600 leading-relaxed">
+                          <RichText text={item} />
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {cs.impact.map((item, i) => {
                     const colonIndex = item.indexOf(":");
@@ -486,10 +558,12 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                     );
                   })}
                 </div>
+                )}
               </div>
             </FadeIn>
 
             {/* Key Learnings */}
+            {!project.hideLearnings && (
             <FadeIn>
               <div>
                 <h2 className="text-xl font-bold text-gray-900 uppercase tracking-wide mb-6">
@@ -519,6 +593,7 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                 </div>
               </div>
             </FadeIn>
+            )}
 
             {/* Related Skills */}
             <FadeIn>
