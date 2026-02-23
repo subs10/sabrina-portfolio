@@ -1,5 +1,3 @@
-"use client";
-
 import FadeIn from "@/components/ui/FadeIn";
 import ArtCard from "@/components/ui/ArtCard";
 import { artPieces } from "@/data/art";

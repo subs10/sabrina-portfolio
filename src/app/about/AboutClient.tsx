@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import FadeIn from "@/components/ui/FadeIn";
 import Button from "@/components/ui/Button";
