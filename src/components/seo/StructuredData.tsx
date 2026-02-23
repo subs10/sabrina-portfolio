@@ -24,7 +24,7 @@ export default function StructuredData() {
     ],
     sameAs: [
       "https://www.linkedin.com/in/sabrinafeld",
-      "https://www.instagram.com/sabrinafeld",
+      "https://www.instagram.com/subs_10",
     ],
   };
 

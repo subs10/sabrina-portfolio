@@ -29,7 +29,7 @@ export default function Home() {
           priority
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/15" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/30 md:from-black/80 md:via-black/40 md:to-black/15" />
 
         {/* Hero content — pushed to bottom */}
         <div className="relative z-10 mt-auto px-5 md:px-20 pb-8 md:pb-14">

@@ -40,7 +40,7 @@ export default function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="text-xl md:text-3xl font-semibold text-gray-900 hover:text-buttercup transition-colors duration-200"
+          className="text-xl md:text-3xl font-semibold text-gray-900 hover:text-[#CFA90F] transition-colors duration-200"
           data-cursor-hover
         >
           Sabrina Feld
@@ -54,8 +54,8 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm tracking-wide transition-colors duration-200 hover:text-buttercup link-underline ${
-                  isActive ? "text-buttercup" : "text-gray-900"
+                className={`text-sm tracking-wide transition-colors duration-200 hover:text-[#CFA90F] link-underline ${
+                  isActive ? "text-[#CFA90F]" : "text-gray-900"
                 }`}
                 data-cursor-hover
               >
@@ -66,7 +66,7 @@ export default function Header() {
           <Link
             href="/resume.pdf"
             target="_blank"
-            className="text-sm tracking-wide px-4 py-2 border border-gray-900 text-gray-900 rounded-sm hover:bg-buttercup hover:border-buttercup transition-all duration-200"
+            className="text-sm tracking-wide px-4 py-2 border border-gray-900 text-gray-900 rounded-sm hover:bg-[#CFA90F] hover:border-[#CFA90F] transition-all duration-200"
             data-cursor-hover
           >
             Resume
@@ -115,8 +115,8 @@ export default function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`text-base transition-colors duration-200 hover:text-buttercup ${
-                      isActive ? "text-buttercup" : "text-gray-900"
+                    className={`text-base transition-colors duration-200 hover:text-[#CFA90F] ${
+                      isActive ? "text-[#CFA90F]" : "text-gray-900"
                     }`}
                     onClick={() => setMobileOpen(false)}
                   >
@@ -127,7 +127,7 @@ export default function Header() {
               <Link
                 href="/resume.pdf"
                 target="_blank"
-                className="text-base text-gray-900 hover:text-buttercup transition-colors"
+                className="text-base text-gray-900 hover:text-[#CFA90F] transition-colors"
                 onClick={() => setMobileOpen(false)}
               >
                 Resume

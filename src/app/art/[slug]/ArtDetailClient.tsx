@@ -21,15 +21,13 @@ export default function ArtDetailClient({ piece, prevItem, nextItem }: Props) {
     <article className="py-12 md:py-16">
       <div className="max-w-5xl mx-auto px-5 md:px-20">
         {/* Back link */}
-        <FadeIn>
-          <Link
-            href="/art"
-            className="text-sm text-gray-500 hover:text-buttercup-dark transition-colors mb-6 inline-block"
-            data-cursor-hover
-          >
-            &larr; All Art
-          </Link>
-        </FadeIn>
+        <Link
+          href="/art"
+          className="text-sm text-gray-500 hover:text-buttercup-dark transition-colors mb-6 inline-block"
+          data-cursor-hover
+        >
+          &larr; All Art
+        </Link>
 
         {/* Header */}
         <FadeIn delay={0.1}>

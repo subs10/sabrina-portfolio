@@ -63,11 +63,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* GPU-accelerate images for smoother transitions */
-img {
-  content-visibility: auto;
+  overflow-x: hidden;
 }
 
 /* Link base styles */

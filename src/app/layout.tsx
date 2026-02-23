@@ -7,7 +7,7 @@ import StructuredData from "@/components/seo/StructuredData";
 
 export const metadata: Metadata = {
   title: {
-    default: "Sabrina Feld | Product Designer & Fine Artist",
+    default: "Sabrina Feld",
     template: "%s | Sabrina Feld",
   },
   description:
@@ -29,8 +29,12 @@ export const metadata: Metadata = {
     "artistic residency",
   ],
   authors: [{ name: "Sabrina Feld" }],
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
   openGraph: {
-    title: "Sabrina Feld | Product Designer & Fine Artist",
+    title: "Sabrina Feld",
     description:
       "Product design, fine art, and creative practice at the intersection of art, tech, and science.",
     type: "website",
