@@ -37,7 +37,7 @@ function RichText({ text, className }: { text: string; className?: string }) {
         const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
         if (linkMatch) {
           return (
-            <a key={i} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" className="text-buttercup-dark underline underline-offset-2 hover:opacity-70 transition-opacity">
+            <a key={i} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" className="font-semibold text-gray-900 underline decoration-gray-300 underline-offset-2 hover:text-buttercup transition-colors">
               {linkMatch[1]}
             </a>
           );
