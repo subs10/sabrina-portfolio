@@ -1,3 +1,5 @@
+const nodemailer = require("nodemailer");
+
 function escapeHtml(str) {
   return str
     .replace(/&/g, "&amp;")
@@ -24,41 +26,33 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: "Missing required fields" };
   }
 
-  if (!process.env.RESEND_API_KEY) {
-    console.error("RESEND_API_KEY is not set");
-    return { statusCode: 500, body: "Server configuration error" };
-  }
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
 
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "sabrinafeld.com <contact@sabrinafeld.com>",
-        to: ["sabrina@feld.com"],
-        reply_to: email,
-        subject: `New message from ${firstName} ${lastName}`,
-        html: `
-          <p><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
-          <p><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
-          <p><strong>Message:</strong></p>
-          <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
-        `,
-      }),
+    await transporter.sendMail({
+      from: `"sabrinafeld.com" <${process.env.SMTP_USER}>`,
+      to: "sabrina@feld.com",
+      replyTo: email,
+      subject: `New message from ${firstName} ${lastName}`,
+      html: `
+        <p><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
+        <p><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
+        <p><strong>Message:</strong></p>
+        <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
+      `,
     });
-
-    if (!res.ok) {
-      const error = await res.text();
-      console.error("Resend error:", error);
-      return { statusCode: 500, body: "Failed to send email" };
-    }
 
     return { statusCode: 200, body: "OK" };
   } catch (err) {
-    console.error("Contact function error:", err);
-    return { statusCode: 500, body: "Internal Server Error" };
+    console.error("Mail error:", err);
+    return { statusCode: 500, body: "Failed to send email" };
   }
 };
