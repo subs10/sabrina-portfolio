@@ -25,14 +25,22 @@ function parseStatParts(stat: string): { number: string; label: string } {
   return { number: stat, label: "" };
 }
 
-/** Renders **bold** markdown within text */
+/** Renders **bold** and [text](url) markdown within text */
 function RichText({ text, className }: { text: string; className?: string }) {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g);
   return (
     <span className={className}>
       {parts.map((part, i) => {
         if (part.startsWith("**") && part.endsWith("**")) {
           return <strong key={i} className="text-gray-900 font-semibold">{part.slice(2, -2)}</strong>;
+        }
+        const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+        if (linkMatch) {
+          return (
+            <a key={i} href={linkMatch[2]} target="_blank" rel="noopener noreferrer" className="text-buttercup-dark underline underline-offset-2 hover:opacity-70 transition-opacity">
+              {linkMatch[1]}
+            </a>
+          );
         }
         return <span key={i}>{part}</span>;
       })}
@@ -406,7 +414,7 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
                     {cs.roleDetails.map((detail, i) => (
                       <div key={i} className="flex items-start gap-2.5 text-gray-600">
                         <span className="mt-[7px] w-2 h-2 rounded-full bg-buttercup flex-shrink-0" />
-                        <span className="text-base leading-snug">{detail}</span>
+                        <span className="text-base leading-snug"><RichText text={detail} /></span>
                       </div>
                     ))}
                   </div>
