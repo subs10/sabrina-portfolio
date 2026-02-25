@@ -3,31 +3,42 @@
 import { useState, FormEvent } from "react";
 import Button from "./Button";
 
-export default function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+type Status = "idle" | "loading" | "success" | "error";
 
-  const handleSubmit = (e: FormEvent) => {
+export default function ContactForm() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // For static export, open mailto as fallback
+    setStatus("loading");
+
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const message = formData.get("message") as string;
 
-    window.location.href = `mailto:sabrina@feld.com?subject=Portfolio Contact from ${name}&body=${encodeURIComponent(
-      `From: ${name} (${email})\n\n${message}`
-    )}`;
-    setSubmitted(true);
+    try {
+      const res = await fetch("/.netlify/functions/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: formData.get("firstName"),
+          lastName: formData.get("lastName"),
+          email: formData.get("email"),
+          message: formData.get("message"),
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   };
 
-  if (submitted) {
+  if (status === "success") {
     return (
       <div className="text-center py-12">
         <p className="text-2xl font-medium text-gray-900 mb-2">Thank you!</p>
-        <p className="text-gray-600">
-          Your message is being prepared in your email client.
-        </p>
+        <p className="text-gray-600">Your message has been sent. I&apos;ll be in touch soon.</p>
       </div>
     );
   }
@@ -61,7 +72,6 @@ export default function ContactForm() {
         </div>
       </div>
       <div>
-        <input type="hidden" name="name" id="nameHidden" />
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
           Email *
         </label>
@@ -85,8 +95,11 @@ export default function ContactForm() {
           className="w-full px-4 py-3 border border-gray-200 rounded-sm text-base md:text-sm bg-white focus:outline-none focus:border-buttercup transition-colors resize-none"
         />
       </div>
-      <Button type="submit" variant="primary" noIcon>
-        Send Message
+      {status === "error" && (
+        <p className="text-sm text-red-600">Something went wrong. Please try again or email me directly.</p>
+      )}
+      <Button type="submit" variant="primary" noIcon disabled={status === "loading"}>
+        {status === "loading" ? "Sending…" : "Send Message"}
       </Button>
     </form>
   );

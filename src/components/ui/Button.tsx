@@ -11,6 +11,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit";
   noIcon?: boolean;
+  disabled?: boolean;
 }
 
 const ArrowIcon = () => (
@@ -36,6 +37,7 @@ export default function Button({
   onClick,
   type = "button",
   noIcon = false,
+  disabled = false,
 }: ButtonProps) {
   const baseStyles =
     "group/btn inline-flex items-center justify-center px-6 py-3 text-sm font-medium tracking-wide transition-all duration-300 rounded-sm overflow-hidden";
@@ -80,7 +82,7 @@ export default function Button({
   }
 
   return (
-    <button type={type} className={styles} onClick={onClick}>
+    <button type={type} className={`${styles} disabled:opacity-50 disabled:cursor-not-allowed`} onClick={onClick} disabled={disabled}>
       {content}
     </button>
   );
