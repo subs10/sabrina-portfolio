@@ -20,9 +20,9 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: "Invalid JSON" };
   }
 
-  const { firstName, lastName, email, message } = body;
+  const { firstName, lastName, email, subject, message } = body;
 
-  if (!firstName || !lastName || !email || !message) {
+  if (!firstName || !lastName || !email || !subject || !message) {
     return { statusCode: 400, body: "Missing required fields" };
   }
 
@@ -41,7 +41,7 @@ exports.handler = async (event) => {
       from: `"sabrinafeld.com" <${process.env.SMTP_USER}>`,
       to: "sabrina@feld.com",
       replyTo: email,
-      subject: `New message from ${firstName} ${lastName}`,
+      subject: `${subject} — ${firstName} ${lastName}`,
       html: `
         <p><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(lastName)}</p>
         <p><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>

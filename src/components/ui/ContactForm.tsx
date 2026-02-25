@@ -23,6 +23,7 @@ export default function ContactForm() {
           firstName: formData.get("firstName"),
           lastName: formData.get("lastName"),
           email: formData.get("email"),
+          subject: formData.get("subject"),
           message: formData.get("message"),
         }),
       });
@@ -79,6 +80,18 @@ export default function ContactForm() {
           type="email"
           id="email"
           name="email"
+          required
+          className="w-full px-4 py-3 border border-gray-200 rounded-sm text-base md:text-sm bg-white focus:outline-none focus:border-buttercup transition-colors"
+        />
+      </div>
+      <div>
+        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+          Subject *
+        </label>
+        <input
+          type="text"
+          id="subject"
+          name="subject"
           required
           className="w-full px-4 py-3 border border-gray-200 rounded-sm text-base md:text-sm bg-white focus:outline-none focus:border-buttercup transition-colors"
         />
