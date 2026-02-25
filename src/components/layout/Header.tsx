@@ -66,7 +66,7 @@ export default function Header() {
           <Link
             href="/resume.pdf"
             target="_blank"
-            className="text-sm tracking-wide px-4 py-2 border border-gray-900 text-gray-900 rounded-sm hover:bg-[#CFA90F] hover:border-[#CFA90F] transition-all duration-200"
+            className="text-sm tracking-wide px-4 py-2 bg-gray-900 text-off-white rounded-sm hover:bg-buttercup hover:text-gray-900 transition-all duration-200"
             data-cursor-hover
           >
             Resume
