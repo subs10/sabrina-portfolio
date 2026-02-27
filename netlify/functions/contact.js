@@ -20,7 +20,12 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: "Invalid JSON" };
   }
 
-  const { firstName, lastName, email, subject, message } = body;
+  const { firstName, lastName, email, subject, message, website } = body;
+
+  // Honeypot: bots fill this hidden field, humans don't
+  if (website) {
+    return { statusCode: 200, body: "OK" };
+  }
 
   if (!firstName || !lastName || !email || !subject || !message) {
     return { statusCode: 400, body: "Missing required fields" };
