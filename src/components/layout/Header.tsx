@@ -63,14 +63,15 @@ export default function Header() {
               </Link>
             );
           })}
-          <Link
+          <a
             href="/resume.pdf"
             target="_blank"
+            rel="noopener noreferrer"
             className="text-sm tracking-wide px-4 py-2 bg-gray-900 text-off-white rounded-sm hover:bg-buttercup hover:text-gray-900 transition-all duration-200"
             data-cursor-hover
           >
             Resume
-          </Link>
+          </a>
         </div>
 
         {/* Mobile hamburger */}
@@ -124,14 +125,15 @@ export default function Header() {
                   </Link>
                 );
               })}
-              <Link
+              <a
                 href="/resume.pdf"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="text-base text-gray-900 hover:text-[#CFA90F] transition-colors"
                 onClick={() => setMobileOpen(false)}
               >
                 Resume
-              </Link>
+              </a>
             </div>
           </motion.div>
         )}

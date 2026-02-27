@@ -53,8 +53,14 @@ export const artPieces: ArtPiece[] = [
     year: "2024",
     description:
       "Using the historic cyanotype process, this series explores the relationship between light, time, and photographic imagery. The distinctive blue tones of cyanotype create an ethereal quality that feels timeless, yet contemporary. Each print in the series repeats an image of the same found objects, examining how the photographic process transforms ordinary subject matter into something contemplative and visually striking. This work continues my interest in materials-based experimentation while engaging with the rich history of photographic processes.",
-    images: Array.from({ length: 5 }, (_, i) => `/images/art/pebble-cyanotypes/${i + 1}.jpg`),
-    coverImage: "/images/art/pebble-cyanotypes/1.jpg",
+    images: [
+      "/images/art/pebble-cyanotypes/2.jpg",
+      "/images/art/pebble-cyanotypes/3.jpg",
+      "/images/art/pebble-cyanotypes/4.jpg",
+      "/images/art/pebble-cyanotypes/5.jpg",
+      "/images/art/pebble-cyanotypes/1.jpg",
+    ],
+    coverImage: "/images/art/pebble-cyanotypes/2.jpg",
   },
   {
     slug: "ancient-blooms",

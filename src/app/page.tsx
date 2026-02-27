@@ -110,7 +110,7 @@ export default function Home() {
             </h2>
           </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-4">
             {featuredProjects.map((project, i) => (
               <FadeIn key={project.slug} delay={i * 0.1}>
                 <Link
