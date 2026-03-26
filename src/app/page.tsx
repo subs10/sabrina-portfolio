@@ -32,7 +32,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/70 to-black/30 md:from-black/80 md:via-black/40 md:to-black/15" />
 
         {/* Hero content — pushed to bottom */}
-        <div className="relative z-10 mt-auto px-5 md:px-20 pb-8 md:pb-14">
+        <div className="relative z-10 mt-auto px-5 md:px-20 pb-32 md:pb-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
