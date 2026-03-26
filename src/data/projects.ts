@@ -147,10 +147,9 @@ export const projects: Project[] = [
     ],
     coverImage: "/images/projects/hawkai-video/cover.jpg",
     videoUrl: "/images/projects/hawkai-video/promo-video.mp4",
-    youtubeUrl: "https://www.youtube.com/embed/6WE_v63gFDA",
     caseStudy: {
       overview:
-        "HawkAI is [StackHawk](https://www.stackhawk.com)\u2019s AI-powered API discovery feature that automatically identifies and catalogs APIs across applications, eliminating the manual work of documenting endpoints and helping security teams understand their API attack surface. The feature launch in 2024 represented a major product milestone, introducing machine learning capabilities that could detect APIs even in complex, undocumented codebases.\n\nAs the centerpiece of the marketing campaign, I created a promotional video that brought energy and personality to a highly technical feature. The video premiered across all social media channels and played a role in setting the creative tone for the launch.",
+        "HawkAI is [StackHawk](https://www.stackhawk.com)\u2019s AI-powered API discovery feature that automatically identifies and catalogs APIs across applications, eliminating the manual work of documenting endpoints and helping security teams understand their API attack surface. The feature launch in 2024 represented a major product milestone, introducing machine learning capabilities that could detect APIs even in complex, undocumented codebases.\n\nAs the centerpiece of the marketing campaign, I created a [promotional video](https://youtu.be/6WE_v63gFDA) that brought energy and personality to a highly technical feature. The video premiered across all social media channels and played a role in setting the creative tone for the launch.",
       role: "As Marketing and Design Intern, I owned the promotional video from concept to delivery.",
       roleDetails: [
         "Creative Direction & Storyboarding: Developed the creative concept of a fun and dramatic movie trailer that would make a technical feature feel exciting and accessible. This direction aligned with StackHawk\u2019s fun, approachable brand while standing out from typical enterprise security marketing.",
