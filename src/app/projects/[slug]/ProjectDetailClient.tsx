@@ -273,8 +273,8 @@ export default function ProjectDetailClient({ project, prevItem, nextItem }: Pro
           </div>
         </FadeIn>
 
-        {/* Cover image — skip for YouTube and imagesOnly projects, use dual layout for images[] */}
-        {isImagesOnly ? null : hasYoutube ? null : hasDualImages ? (
+        {/* Cover image — skip for YouTube, video, and imagesOnly projects, use dual layout for images[] */}
+        {isImagesOnly ? null : hasYoutube ? null : project.videoUrl ? null : hasDualImages ? (
           <FadeIn delay={0.2}>
             <div className="grid grid-cols-2 gap-4 mb-16">
               {project.images!.map((img, i) => (
