@@ -20,6 +20,7 @@ export interface Project {
   slides?: Slide[];
   imagesOnly?: boolean;
   hideLearnings?: boolean;
+  hidden?: boolean;
   caseStudy: {
     overview: string;
     role: string;
@@ -36,7 +37,7 @@ export interface Project {
   };
 }
 
-export const projects: Project[] = [
+const _allProjects: Project[] = [
   {
     slug: "hosted-scanner",
     title: "Hosted Scanner Product Launch",
@@ -305,6 +306,7 @@ export const projects: Project[] = [
   },
   {
     slug: "selected-design",
+    hidden: true,
     title: "Selected Design Work",
     category: "Digital Marketing & Design",
     organization: "",
@@ -347,3 +349,5 @@ export const projects: Project[] = [
     },
   },
 ];
+
+export const projects = _allProjects.filter((p) => !p.hidden);
