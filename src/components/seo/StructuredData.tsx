@@ -4,7 +4,6 @@ export default function StructuredData() {
     "@type": "Person",
     name: "Sabrina Feld",
     url: "https://sabrinafeld.com",
-    email: "sabrina@feld.com",
     jobTitle: "Product Designer & Fine Artist",
     description:
       "Scripps College senior pursuing dual degrees in Science, Technology & Society and Fine Arts. Seeking roles in product design, product management, and creative practice.",
