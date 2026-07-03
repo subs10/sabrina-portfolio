@@ -20,7 +20,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: "Invalid JSON" };
   }
 
-  const { firstName, lastName, email, subject, message, website } = body;
+  const { firstName, lastName, email, subject, message, website, turnstileToken } = body;
 
   // Honeypot: bots fill this hidden field, humans don't
   if (website) {
@@ -29,6 +29,25 @@ exports.handler = async (event) => {
 
   if (!firstName || !lastName || !email || !subject || !message) {
     return { statusCode: 400, body: "Missing required fields" };
+  }
+
+  // Verify Turnstile token
+  if (!turnstileToken) {
+    return { statusCode: 400, body: "Missing verification token" };
+  }
+
+  const verifyRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      secret: process.env.TURNSTILE_SECRET,
+      response: turnstileToken,
+    }),
+  });
+
+  const verifyData = await verifyRes.json();
+  if (!verifyData.success) {
+    return { statusCode: 403, body: "Verification failed" };
   }
 
   const transporter = nodemailer.createTransport({

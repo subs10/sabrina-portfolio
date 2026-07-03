@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import Script from "next/script";
 import Button from "./Button";
+
+const TURNSTILE_SITE_KEY = "0x4AAAAAADvKImid8CwfoBKk";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -26,6 +29,7 @@ export default function ContactForm() {
           subject: formData.get("subject"),
           message: formData.get("message"),
           website: formData.get("website"),
+          turnstileToken: formData.get("cf-turnstile-response"),
         }),
       });
 
@@ -116,9 +120,11 @@ export default function ContactForm() {
       {status === "error" && (
         <p className="text-sm text-red-600">Something went wrong. Please try again or email me directly.</p>
       )}
+      <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} />
       <Button type="submit" variant="primary" noIcon disabled={status === "loading"}>
         {status === "loading" ? "Sending…" : "Send Message"}
       </Button>
+      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
     </form>
   );
 }
