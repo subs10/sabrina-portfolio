@@ -63,7 +63,7 @@ exports.handler = async (event) => {
   try {
     await transporter.sendMail({
       from: `"${firstName} ${lastName} via sabrinafeld.com" <${process.env.SMTP_USER}>`,
-      to: "sabrina@feld.com",
+      to: "sabrinafeld01@gmail.com",
       replyTo: email,
       subject: `${subject} — ${firstName} ${lastName}`,
       html: `

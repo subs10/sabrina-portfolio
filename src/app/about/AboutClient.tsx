@@ -6,7 +6,7 @@ export default function AboutClient() {
   return (
     <section className="py-20 md:py-28">
       <div className="max-w-7xl mx-auto px-5 md:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 lg:items-stretch">
           {/* Headshot */}
           <FadeIn direction="left">
             <div className="relative aspect-[3/4] rounded-sm overflow-hidden lg:sticky lg:top-24">
@@ -22,7 +22,7 @@ export default function AboutClient() {
           </FadeIn>
 
           {/* Content */}
-          <div className="space-y-10">
+          <div className="space-y-10 lg:flex lg:flex-col">
             {/* Maker in Motion */}
             <FadeIn>
               <div>
@@ -70,6 +70,7 @@ export default function AboutClient() {
             </FadeIn>
 
             {/* Resume CTA */}
+            <div className="lg:mt-auto">
             <FadeIn>
               <div className="border-t border-gray-100 pt-8">
                 <Button href="/resume.pdf" variant="primary" external>
@@ -77,6 +78,7 @@ export default function AboutClient() {
                 </Button>
               </div>
             </FadeIn>
+            </div>
           </div>
         </div>
       </div>
