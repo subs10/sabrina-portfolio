@@ -52,7 +52,7 @@ export default function Home() {
             className="mt-6 md:mt-8 max-w-full md:max-w-[75vw] space-y-4 ml-0.5"
           >
             <p className="text-base md:text-xl text-white/95 leading-relaxed">
-              I&rsquo;m a senior at{" "}
+              I recently graduated from{" "}
               <a
                 href="https://www.scrippscollege.edu/"
                 target="_blank"
@@ -61,8 +61,8 @@ export default function Home() {
                 data-cursor-hover
               >
                 Scripps College
-              </a>{" "}
-              studying{" "}
+              </a>
+              , where I studied{" "}
               <a
                 href="https://catalog.scrippscollege.edu/preview_entity.php?catoid=35&ent_oid=2597&returnto=4490"
                 target="_blank"
