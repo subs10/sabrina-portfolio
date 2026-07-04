@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import Script from "next/script";
 import Button from "./Button";
 
@@ -10,6 +10,12 @@ type Status = "idle" | "loading" | "success" | "error";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
+  const [turnstileReady, setTurnstileReady] = useState(false);
+
+  useEffect(() => {
+    (window as any).onTurnstileSuccess = () => setTurnstileReady(true);
+    return () => { delete (window as any).onTurnstileSuccess; };
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -120,11 +126,11 @@ export default function ContactForm() {
       {status === "error" && (
         <p className="text-sm text-red-600">Something went wrong. Please try again or email me directly.</p>
       )}
-      <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} />
-      <Button type="submit" variant="primary" noIcon disabled={status === "loading"}>
+      <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-callback="onTurnstileSuccess" />
+      <Button type="submit" variant="primary" noIcon disabled={status === "loading" || !turnstileReady}>
         {status === "loading" ? "Sending…" : "Send Message"}
       </Button>
-      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="lazyOnload" />
+      <Script src="https://challenges.cloudflare.com/turnstile/v0/api.js" strategy="afterInteractive" />
     </form>
   );
 }
