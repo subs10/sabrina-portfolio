@@ -22,11 +22,8 @@ exports.handler = async (event) => {
 
   const { firstName, lastName, email, subject, message, _hp_trap, turnstileToken } = body;
 
-  console.log("Honeypot value:", _hp_trap || "(empty)");
-
   // Honeypot: bots fill this hidden field, humans don't
   if (_hp_trap) {
-    console.log("Honeypot triggered, rejecting");
     return { statusCode: 200, body: "OK" };
   }
 
@@ -64,10 +61,6 @@ exports.handler = async (event) => {
   });
 
   try {
-    console.log("Verifying SMTP connection...");
-    await transporter.verify();
-    console.log("SMTP connection verified OK");
-
     const info = await transporter.sendMail({
       from: `"${firstName} ${lastName} via sabrinafeld.com" <${process.env.SMTP_USER}>`,
       to: "sabrina@feld.com",
@@ -81,7 +74,6 @@ exports.handler = async (event) => {
       `,
     });
 
-    console.log("Email sent, messageId:", info.messageId, "response:", info.response);
     return { statusCode: 200, body: "OK" };
   } catch (err) {
     console.error("Mail error:", err.message);
