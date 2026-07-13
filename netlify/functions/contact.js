@@ -61,7 +61,11 @@ exports.handler = async (event) => {
   });
 
   try {
-    await transporter.sendMail({
+    console.log("Verifying SMTP connection...");
+    await transporter.verify();
+    console.log("SMTP connection verified OK");
+
+    const info = await transporter.sendMail({
       from: `"${firstName} ${lastName} via sabrinafeld.com" <${process.env.SMTP_USER}>`,
       to: "sabrina@feld.com",
       replyTo: email,
@@ -74,9 +78,10 @@ exports.handler = async (event) => {
       `,
     });
 
+    console.log("Email sent, messageId:", info.messageId, "response:", info.response);
     return { statusCode: 200, body: "OK" };
   } catch (err) {
-    console.error("Mail error:", err);
+    console.error("Mail error:", err.message);
     return { statusCode: 500, body: "Failed to send email" };
   }
 };
