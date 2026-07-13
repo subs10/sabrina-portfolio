@@ -20,10 +20,13 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: "Invalid JSON" };
   }
 
-  const { firstName, lastName, email, subject, message, website, turnstileToken } = body;
+  const { firstName, lastName, email, subject, message, _hp_trap, turnstileToken } = body;
+
+  console.log("Honeypot value:", _hp_trap || "(empty)");
 
   // Honeypot: bots fill this hidden field, humans don't
-  if (website) {
+  if (_hp_trap) {
+    console.log("Honeypot triggered, rejecting");
     return { statusCode: 200, body: "OK" };
   }
 

@@ -34,7 +34,7 @@ export default function ContactForm() {
           email: formData.get("email"),
           subject: formData.get("subject"),
           message: formData.get("message"),
-          website: formData.get("website"),
+          _hp_trap: formData.get("_hp_trap"),
           turnstileToken: formData.get("cf-turnstile-response"),
         }),
       });
@@ -59,7 +59,7 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6 w-full">
       {/* Honeypot — hidden from humans, bots fill it automatically */}
       <div style={{ position: "absolute", left: "-9999px", top: "-9999px" }} aria-hidden="true">
-        <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        <input type="text" name="_hp_trap" tabIndex={-1} autoComplete="off" />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
