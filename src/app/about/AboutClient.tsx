@@ -4,8 +4,8 @@ import Button from "@/components/ui/Button";
 
 export default function AboutClient() {
   return (
-    <section className="py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-5 md:px-20">
+    <section className="pt-8 md:pt-16 pb-20 md:pb-28">
+      <div className="max-w-7xl mx-auto px-5 md:px-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Headshot */}
           <FadeIn direction="left">

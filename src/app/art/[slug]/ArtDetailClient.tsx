@@ -17,7 +17,7 @@ interface Props {
 export default function ArtDetailClient({ piece, prevItem, nextItem }: Props) {
   return (
     <article className="py-12 md:py-16">
-      <div className="max-w-5xl mx-auto px-5 md:px-20">
+      <div className="max-w-5xl mx-auto px-5 md:px-32">
         {/* Back link */}
         <Link
           href="/art"

@@ -4,7 +4,7 @@ import { footerLinks, socialLinks } from "@/data/navigation";
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-off-white">
-      <div className="max-w-7xl mx-auto px-5 md:px-20 py-12 md:py-16">
+      <div className="max-w-7xl mx-auto px-5 md:px-32 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Name */}
           <div>

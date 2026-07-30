@@ -7,13 +7,24 @@ export interface Slide {
 export interface Project {
   slug: string;
   title: string;
-  category: string;
+  categories: string[];
   organization: string;
   year: string;
   description: string;
+  roleTitle: string;
   tags: string[];
   coverImage: string;
   secondaryImage?: string;
+  summaryLine?: string;
+  wireframeStudyImages?: string[];
+  approachImage?: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    afterParagraph: number;
+    caption?: string;
+  };
   videoUrl?: string;
   youtubeUrl?: string;
   images?: string[];
@@ -41,11 +52,12 @@ const _allProjects: Project[] = [
   {
     slug: "hosted-scanner",
     title: "Hosted Scanner Product Launch",
-    category: "Product Management",
+    categories: ["Product Management"],
     organization: "StackHawk",
     year: "2025",
     description:
-      "Led end-to-end project coordination for the Hosted Scanner product launch, spanning design, engineering, sales, and leadership.",
+      "Managed security scanning for teams that can't run it themselves.",
+    roleTitle: "Product Management Intern",
     tags: [
       "cross-functional communication",
       "release planning",
@@ -86,13 +98,170 @@ const _allProjects: Project[] = [
     },
   },
   {
+    slug: "blink-catalogue",
+    hidden: true,
+    title: "Blink Catalogue",
+    categories: ["Design"],
+    organization: "",
+    year: "",
+    description:
+      "TODO: exhibition catalogue layout design. Content, copy, and images to follow in a separate pass.",
+    roleTitle: "TODO",
+    tags: [],
+    coverImage: "",
+    caseStudy: {
+      overview: "TODO",
+      role: "TODO",
+      roleDetails: [],
+      challenge: "TODO",
+      approach: "TODO",
+      impact: [],
+      learnings: "TODO",
+      relatedSkills: [],
+    },
+  },
+  {
+    slug: "building-this-website",
+    title: "Building This Website",
+    categories: ["Design"],
+    organization: "Personal",
+    year: "2025\u20132026",
+    description:
+      "A personal portfolio designed and coded entirely through AI collaboration.",
+    roleTitle: "Creative Director & Developer",
+    tags: [
+      "vibe-coding",
+      "AI-assisted development",
+      "creative direction",
+      "UI/UX design",
+      "front-end development",
+    ],
+    coverImage: "/images/projects/building-this-website/cover.jpg",
+    wireframeStudyImages: [
+      "/images/projects/building-this-website/wireframe-home.png",
+      "/images/projects/building-this-website/wireframe-projects.png",
+      "/images/projects/building-this-website/wireframe-art.png",
+      "/images/projects/building-this-website/wireframe-about.png",
+    ],
+    approachImage: {
+      src: "/images/projects/building-this-website/color-type.png",
+      alt: "Color palette (Ink, Paper, Mustard, Neutral Gray) and type scale reference for the site",
+      width: 2811,
+      height: 1389,
+      afterParagraph: 0,
+    },
+    hideLearnings: true,
+    caseStudy: {
+      overview:
+        "My previous portfolio wasn\u2019t telling the full story. I needed something that could hold **three very different bodies of work** (product management, design, and fine art) and still feel cohesive and distinctly mine.\n\nRather than defaulting to Squarespace or Framer, I decided to build it myself using **Claude Code**. I\u2019d been watching vibe-coding become a real workflow in design and product environments. Using AI tools fluently isn\u2019t a shortcut anymore, it\u2019s a skill. I wanted to prove to myself that I could lead a full technical build end-to-end, even without an extensive engineering background.\n\nThe result is a fully custom, self-hosted website that I designed, directed, and shipped **solo, over 11 days**.",
+      role: "The result is a fully custom Next.js site. No templates, no drag-and-drop builders, just clean code I understand and can maintain. Every page, interaction, and visual detail was a deliberate choice.",
+      roleDetails: [
+        "6 page templates (Home, Projects, Art, About, Contact, Case Studies)",
+        "Custom image carousel with lightbox full-screen expand",
+        "Scroll-triggered fade animations (Framer Motion)",
+        "Interactive hero text with cursor-reactive distortion",
+        "Frosted glass navigation header",
+        "Fully responsive across mobile and desktop",
+        "Reusable component library (Nav, Footer, ProjectCard, ImageLightbox)",
+        "Self-hosted on Netlify \u2014 no ongoing platform fees",
+      ],
+      bulletRoleDetails: true,
+      challenge:
+        "**Communicating design intent without code vocabulary:** I don\u2019t write CSS. So I had to get precise in other ways. I referenced sites I liked, describing the feeling of an interaction, explaining what was wrong with what I was seeing in the browser. This pushed me to develop a much sharper design vocabulary. \u201CThe yellow isn\u2019t readable\u201D became \u201Cmatch the header yellow to the gold in the page body hover states.\u201D\n\n**Debugging as a non-developer:** When something broke, I couldn\u2019t read the error and fix it directly. I had to describe symptoms clearly, share screenshots, and trust the iteration process. This was frustrating at times, but it taught me a lot about how design decisions translate (or don\u2019t) into code. I got faster at identifying root causes by the end.\n\n**Staying the creative director:** The biggest challenge wasn\u2019t technical, it was staying in the driver\u2019s seat rather than reacting to whatever the AI produced. The best outputs came when I arrived with strong opinions. The weakest moments were when I asked Claude to \u201Cmake it look better\u201D without knowing what better meant to me. The tool is only as good as the direction behind it.",
+      approach:
+        "**Phase 1, Foundation & Creative Direction:** Before writing any code, I had to figure out what I wanted the site to feel like. I gathered reference sites, prepared my content, and came into the build with a clear creative vision: warm tones pulled from my artwork, a clean editorial layout for the projects section, and interactions with genuine personality. I used my existing project case studies as **context documents** so Claude always had a full picture of my work and voice.\n\n**Phase 2, Page by Page:** I worked through the site section by section \u2014 home, projects, art, about, contact \u2014 iterating on each until it felt right before moving forward. The projects pages needed structured case study formatting with enough visual breathing room to let the work speak. The art pages needed a gallery experience that felt more like a museum than a portfolio grid. This phase was the most iterative. I would describe what I wanted, see the result in the browser, and redirect with precision. Every detail went through **multiple rounds**, from cursor behavior to scroll animations and hover states. I logged **20+ distinct feedback sessions** across the **11 days**.\n\n**Phase 3, Polish & the Details:** The last stretch was the hardest and the most satisfying. Getting scroll animations to trigger correctly at all scroll speeds. Making the lightbox image expansion feel seamless. Matching the exact yellow across the header and page body. Ensuring the contact page read cleanly on mobile. These aren\u2019t glamorous problems, but solving them is the difference between a rough prototype and something I am proud to share.",
+      impact: [
+        "**Strong opinions make better AI outputs.** The more specific and directional I was, the better the results. Vague prompts produced generic designs. Clear creative conviction produced something that felt like mine.",
+        "**AI doesn\u2019t eliminate iteration, it makes each iteration faster.** I still went through dozens of rounds on the scroll animations, the nav header, the contact page. The difference is that each round took minutes instead of days.",
+        "**Shipping teaches you things planning can\u2019t.** Seeing the site in a real browser, on my phone, at different screen sizes is where the real design work happened. No amount of planning would have surfaced the issues I found by actually using the thing.",
+        "**This is the future of building.** Not because AI replaces designers or developers, but because the gap between \u201CI have an idea\u201D and \u201CI have a website\u201D is getting shorter. Knowing how to close that gap \u2014 with taste, direction, and persistence \u2014 is a real and growing skill.",
+      ],
+      listImpact: true,
+      learnings:
+        "This project took more time than I expected and produced something better than I planned for. I came in wanting to prove I could use AI tools. I left having built a site that holds my full range of work and feels like a real extension of how I think and make.",
+      relatedSkills: [
+        "Vibe-Coding",
+        "AI-Assisted Development",
+        "Creative Direction",
+        "UI/UX Design",
+        "Front-End Development",
+        "Product Thinking",
+      ],
+      stats: [
+        "4\u20136 hrs active build time",
+        "11 days start to finish",
+        "20+ feedback sessions",
+        "6 page templates built",
+      ],
+    },
+  },
+  {
+    slug: "hawkai-video",
+    title: "HawkAI Promotional Video",
+    categories: ["Design", "Marketing"],
+    organization: "StackHawk",
+    year: "2024",
+    description:
+      "A movie-trailer-style launch video for an AI-powered API discovery feature.",
+    roleTitle: "Marketing & Design Intern",
+    tags: [
+      "product marketing",
+      "figma",
+      "brand communication",
+      "visual storytelling",
+    ],
+    coverImage: "/images/projects/hawkai-video/cover.jpg",
+    videoUrl: "/images/projects/hawkai-video/promo-video.mp4",
+    approachImage: {
+      src: "/images/projects/hawkai-video/storyboard.png",
+      alt: "HawkAI promotional video storyboard, 13 frames from logo animation to closing card",
+      width: 4004,
+      height: 554,
+      afterParagraph: 0,
+    },
+    caseStudy: {
+      overview:
+        "HawkAI is [StackHawk](https://www.stackhawk.com)\u2019s AI-powered API discovery feature that automatically identifies and catalogs APIs across applications, eliminating the manual work of documenting endpoints and helping security teams understand their API attack surface. The feature launch in 2024 represented a major product milestone, introducing machine learning capabilities that could detect APIs even in complex, undocumented codebases.\n\nAs the centerpiece of the marketing campaign, I created a [promotional video](https://youtu.be/6WE_v63gFDA) that brought energy and personality to a highly technical feature. The video premiered across all social media channels and played a role in setting the creative tone for the launch.",
+      role: "As Marketing and Design Intern, I owned the promotional video from concept to delivery.",
+      roleDetails: [
+        "Creative Direction & Storyboarding: Developed the creative concept of a fun and dramatic movie trailer that would make a technical feature feel exciting and accessible. This direction aligned with StackHawk\u2019s fun, approachable brand while standing out from typical enterprise security marketing.",
+        "Content Development: Worked with the design team to collect and sequence images that would visually communicate HawkAI\u2019s capabilities. Collaborated with marketing to gather customer quotes and wrote copy that balanced technical accuracy with engaging storytelling.",
+        "Video Production: Animated images and text, timed sequences to music, and edited the final video. Made deliberate choices about pacing, transitions, and music to create a trailer-style build that kept viewers engaged while conveying the product\u2019s value.",
+        "Marketing Collaboration: Coordinated with the marketing team to ensure the video supported broader launch messaging and could be adapted across different social media platforms.",
+      ],
+      challenge:
+        "API discovery is complex and technical. Most security professionals understand why it matters\u2014you can\u2019t secure what you don\u2019t know exists\u2014but explaining how AI-powered discovery works in an engaging way is difficult. Traditional product marketing for enterprise security tools tends toward dry, feature-focused content that doesn\u2019t generate excitement.\n\nStackHawk needed a launch asset that would make a technical feature feel exciting, stand out in crowded social media feeds, align with the company\u2019s fun brand, and generate genuine enthusiasm internally and externally.",
+      approach:
+        "I took creative inspiration from movie trailers, using dramatic pacing, bold text treatments, and energetic music to build anticipation. The video followed a narrative arc: establishing the problem (APIs are everywhere and hard to track), building tension (manual discovery doesn\u2019t scale), and delivering the solution (HawkAI does it automatically).\n\nThe video is entirely motion graphics and screen-recording driven\u2014no on-camera talent, no voiceover, just dramatic music carrying the pacing. Every beat builds toward a single core moment: the coverage stat counting from 0% to 100%, the visual payoff of automated feature discovery, before resolving into a branded call-to-action card.\n\nWorking with the design team, I selected and sequenced images that would visually support this story while showcasing the product interface. Customer quotes added credibility and real-world context, while copy focused on impact rather than technical specifications. I animated everything to music, timing transitions and text reveals to create momentum.",
+      impact: [
+        "**Campaign Centerpiece.** The video became one of the lead assets for the HawkAI launch across all social media channels, helping set the creative tone for the campaign.",
+        "**Internal Enthusiasm.** The team loved the creative direction. The fun approach resonated with StackHawk\u2019s culture and brand image, proving that enterprise security marketing didn\u2019t have to be boring.",
+        "**Creative Differentiation.** The movie trailer style stood out from typical product launch videos in the security space, helping StackHawk\u2019s content cut through noise in social feeds.",
+      ],
+      listImpact: true,
+      learnings:
+        "Choosing a dramatic tone for an enterprise security product was a risk, but it aligned perfectly with StackHawk\u2019s brand and resonated with both internal teams and customers. I learned that creative risks pay off when you know your brand well, and that focusing on storytelling over feature lists makes technical content more accessible. Small decisions about pacing and timing animations to music made a significant difference in keeping viewers engaged.",
+      relatedSkills: [
+        "Video Production",
+        "Creative Direction",
+        "Storyboarding",
+        "Marketing",
+        "Brand Strategy",
+        "Content Development",
+        "Animation",
+        "Cross-Functional Collaboration",
+      ],
+    },
+  },
+  {
     slug: "stackhawk-vibe",
     title: "StackHawk Vibe",
-    category: "Product Research",
+    categories: ["Product Management"],
     organization: "StackHawk",
     year: "2025",
     description:
-      "Supported research and internal documentation for a cutting-edge AI-driven MCP product designed to bring security testing into AI coding workflows.",
+      "Security testing built directly into AI coding assistants.",
+    roleTitle: "Product Management Intern",
     tags: [
       "product research",
       "internal documentation",
@@ -133,62 +302,14 @@ const _allProjects: Project[] = [
     },
   },
   {
-    slug: "hawkai-video",
-    title: "HawkAI Promotional Video",
-    category: "Visual Storytelling",
-    organization: "StackHawk",
-    year: "2024",
-    description:
-      "Designed and produced a launch video for HawkAI, orchestrating visuals, animation, and music to highlight product features and generate excitement for the release.",
-    tags: [
-      "product marketing",
-      "figma",
-      "brand communication",
-      "visual storytelling",
-    ],
-    coverImage: "/images/projects/hawkai-video/cover.jpg",
-    videoUrl: "/images/projects/hawkai-video/promo-video.mp4",
-    caseStudy: {
-      overview:
-        "HawkAI is [StackHawk](https://www.stackhawk.com)\u2019s AI-powered API discovery feature that automatically identifies and catalogs APIs across applications, eliminating the manual work of documenting endpoints and helping security teams understand their API attack surface. The feature launch in 2024 represented a major product milestone, introducing machine learning capabilities that could detect APIs even in complex, undocumented codebases.\n\nAs the centerpiece of the marketing campaign, I created a [promotional video](https://youtu.be/6WE_v63gFDA) that brought energy and personality to a highly technical feature. The video premiered across all social media channels and played a role in setting the creative tone for the launch.",
-      role: "As Marketing and Design Intern, I owned the promotional video from concept to delivery.",
-      roleDetails: [
-        "Creative Direction & Storyboarding: Developed the creative concept of a fun and dramatic movie trailer that would make a technical feature feel exciting and accessible. This direction aligned with StackHawk\u2019s fun, approachable brand while standing out from typical enterprise security marketing.",
-        "Content Development: Worked with the design team to collect and sequence images that would visually communicate HawkAI\u2019s capabilities. Collaborated with marketing to gather customer quotes and wrote copy that balanced technical accuracy with engaging storytelling.",
-        "Video Production: Animated images and text, timed sequences to music, and edited the final video. Made deliberate choices about pacing, transitions, and music to create a trailer-style build that kept viewers engaged while conveying the product\u2019s value.",
-        "Marketing Collaboration: Coordinated with the marketing team to ensure the video supported broader launch messaging and could be adapted across different social media platforms.",
-      ],
-      challenge:
-        "API discovery is complex and technical. Most security professionals understand why it matters\u2014you can\u2019t secure what you don\u2019t know exists\u2014but explaining how AI-powered discovery works in an engaging way is difficult. Traditional product marketing for enterprise security tools tends toward dry, feature-focused content that doesn\u2019t generate excitement.\n\nStackHawk needed a launch asset that would make a technical feature feel exciting, stand out in crowded social media feeds, align with the company\u2019s fun brand, and generate genuine enthusiasm internally and externally.",
-      approach:
-        "I took creative inspiration from movie trailers, using dramatic pacing, bold text treatments, and energetic music to build anticipation. The video followed a narrative arc: establishing the problem (APIs are everywhere and hard to track), building tension (manual discovery doesn\u2019t scale), and delivering the solution (HawkAI does it automatically).\n\nWorking with the design team, I selected and sequenced images that would visually support this story while showcasing the product interface. Customer quotes added credibility and real-world context, while copy focused on impact rather than technical specifications. I animated everything to music, timing transitions and text reveals to create momentum.",
-      impact: [
-        "Campaign Centerpiece: The video became one of the lead assets for the HawkAI launch across all social media channels, helping set the creative tone for the campaign.",
-        "Internal Enthusiasm: The team loved the creative direction. The fun approach resonated with StackHawk\u2019s culture and brand image, proving that enterprise security marketing didn\u2019t have to be boring.",
-        "Creative Differentiation: The movie trailer style stood out from typical product launch videos in the security space, helping StackHawk\u2019s content cut through noise in social feeds.",
-      ],
-      learnings:
-        "Choosing a dramatic tone for an enterprise security product was a risk, but it aligned perfectly with StackHawk\u2019s brand and resonated with both internal teams and customers. I learned that creative risks pay off when you know your brand well, and that focusing on storytelling over feature lists makes technical content more accessible. Small decisions about pacing and timing animations to music made a significant difference in keeping viewers engaged.",
-      relatedSkills: [
-        "Video Production",
-        "Creative Direction",
-        "Storyboarding",
-        "Marketing",
-        "Brand Strategy",
-        "Content Development",
-        "Animation",
-        "Cross-Functional Collaboration",
-      ],
-    },
-  },
-  {
     slug: "scripps-journal",
     title: "Scripps College Journal",
-    category: "Editorial Design & Layout",
+    categories: ["Design"],
     organization: "Scripps College",
     year: "2024",
     description:
-      "Sole designer of the journal\u2019s layout and visual structure from concept through print, translating student writing and artwork into a cohesive, publication-ready design.",
+      "The college's annual literary journal, designed cover to cover.",
+    roleTitle: "Layout Editor",
     tags: [
       "editorial design",
       "publication layout",
@@ -244,75 +365,15 @@ const _allProjects: Project[] = [
     },
   },
   {
-    slug: "building-this-website",
-    title: "Building This Website",
-    category: "Design + Development",
-    organization: "Personal",
-    year: "2025\u20132026",
-    description:
-      "Designed, coded, and hosted with AI, all from scratch.",
-    tags: [
-      "vibe-coding",
-      "AI-assisted development",
-      "creative direction",
-      "UI/UX design",
-      "front-end development",
-    ],
-    coverImage: "/images/projects/building-this-website/cover.jpg",
-    hideLearnings: true,
-    caseStudy: {
-      overview:
-        "My previous portfolio wasn\u2019t telling the full story. I needed something that could hold **three very different bodies of work** (product management, design, and fine art) and still feel cohesive and distinctly mine.\n\nRather than defaulting to Squarespace or Framer, I decided to build it myself using **Claude Code**. I\u2019d been watching vibe-coding become a real workflow in design and product environments. Using AI tools fluently isn\u2019t a shortcut anymore, it\u2019s a skill. I wanted to prove to myself that I could lead a full technical build end-to-end, even without an extensive engineering background.\n\nThe result is a fully custom, self-hosted website that I designed, directed, and shipped **solo, over 11 days**.",
-      role: "The result is a fully custom Next.js site. No templates, no drag-and-drop builders, just clean code I understand and can maintain. Every page, interaction, and visual detail was a deliberate choice.",
-      roleDetails: [
-        "6 page templates (Home, Projects, Art, About, Contact, Case Studies)",
-        "Custom image carousel with lightbox full-screen expand",
-        "Scroll-triggered fade animations (Framer Motion)",
-        "Interactive hero text with cursor-reactive distortion",
-        "Frosted glass navigation header",
-        "Fully responsive across mobile and desktop",
-        "Reusable component library (Nav, Footer, ProjectCard, ImageLightbox)",
-        "Self-hosted on Netlify \u2014 no ongoing platform fees",
-      ],
-      bulletRoleDetails: true,
-      challenge:
-        "**Communicating design intent without code vocabulary:** I don\u2019t write CSS. So I had to get precise in other ways. I referenced sites I liked, describing the feeling of an interaction, explaining what was wrong with what I was seeing in the browser. This pushed me to develop a much sharper design vocabulary. \u201CThe yellow isn\u2019t readable\u201D became \u201Cmatch the header yellow to the gold in the page body hover states.\u201D\n\n**Debugging as a non-developer:** When something broke, I couldn\u2019t read the error and fix it directly. I had to describe symptoms clearly, share screenshots, and trust the iteration process. This was frustrating at times, but it taught me a lot about how design decisions translate (or don\u2019t) into code. I got faster at identifying root causes by the end.\n\n**Staying the creative director:** The biggest challenge wasn\u2019t technical, it was staying in the driver\u2019s seat rather than reacting to whatever the AI produced. The best outputs came when I arrived with strong opinions. The weakest moments were when I asked Claude to \u201Cmake it look better\u201D without knowing what better meant to me. The tool is only as good as the direction behind it.",
-      approach:
-        "**Phase 1, Foundation & Creative Direction:** Before writing any code, I had to figure out what I wanted the site to feel like. I gathered reference sites, prepared my content, and came into the build with a clear creative vision: warm tones pulled from my artwork, a clean editorial layout for the projects section, and interactions with genuine personality. I used my existing project case studies as **context documents** so Claude always had a full picture of my work and voice.\n\n**Phase 2, Page by Page:** I worked through the site section by section \u2014 home, projects, art, about, contact \u2014 iterating on each until it felt right before moving forward. The projects pages needed structured case study formatting with enough visual breathing room to let the work speak. The art pages needed a gallery experience that felt more like a museum than a portfolio grid. This phase was the most iterative. I would describe what I wanted, see the result in the browser, and redirect with precision. Every detail went through **multiple rounds**, from cursor behavior to scroll animations and hover states. I logged **20+ distinct feedback sessions** across the **11 days**.\n\n**Phase 3, Polish & the Details:** The last stretch was the hardest and the most satisfying. Getting scroll animations to trigger correctly at all scroll speeds. Making the lightbox image expansion feel seamless. Matching the exact yellow across the header and page body. Ensuring the contact page read cleanly on mobile. These aren\u2019t glamorous problems, but solving them is the difference between a rough prototype and something I am proud to share.",
-      impact: [
-        "**Strong opinions make better AI outputs.** The more specific and directional I was, the better the results. Vague prompts produced generic designs. Clear creative conviction produced something that felt like mine.",
-        "**AI doesn\u2019t eliminate iteration, it makes each iteration faster.** I still went through dozens of rounds on the scroll animations, the nav header, the contact page. The difference is that each round took minutes instead of days.",
-        "**Shipping teaches you things planning can\u2019t.** Seeing the site in a real browser, on my phone, at different screen sizes is where the real design work happened. No amount of planning would have surfaced the issues I found by actually using the thing.",
-        "**This is the future of building.** Not because AI replaces designers or developers, but because the gap between \u201CI have an idea\u201D and \u201CI have a website\u201D is getting shorter. Knowing how to close that gap \u2014 with taste, direction, and persistence \u2014 is a real and growing skill.",
-      ],
-      listImpact: true,
-      learnings:
-        "This project took more time than I expected and produced something better than I planned for. I came in wanting to prove I could use AI tools. I left having built a site that holds my full range of work and feels like a real extension of how I think and make.",
-      relatedSkills: [
-        "Vibe-Coding",
-        "AI-Assisted Development",
-        "Creative Direction",
-        "UI/UX Design",
-        "Front-End Development",
-        "Product Thinking",
-      ],
-      stats: [
-        "4\u20136 hrs active build time",
-        "11 days start to finish",
-        "20+ feedback sessions",
-        "6 page templates built",
-      ],
-    },
-  },
-  {
     slug: "selected-design",
     hidden: true,
     title: "Selected Design Work",
-    category: "Digital Marketing & Design",
+    categories: ["Design", "Marketing"],
     organization: "",
     year: "2024\u20132025",
     description:
       "Produced a range of digital design assets including ad campaigns, social media graphics, and website landing and login pages, focusing on clarity, usability, and brand consistency.",
+    roleTitle: "Designer",
     tags: ["UI design", "digital marketing assets", "figma", "web interfaces"],
     coverImage: "/images/projects/selected-design/cover.png",
     images: [

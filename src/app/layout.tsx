@@ -60,7 +60,7 @@ export default function RootLayout({
         <StructuredData />
         <CustomCursor />
         <Header />
-        <main className="min-h-screen pt-16 md:pt-20">{children}</main>
+        <main className="min-h-screen pt-[68px] md:pt-[84px]">{children}</main>
         <Footer />
         <Script
           defer

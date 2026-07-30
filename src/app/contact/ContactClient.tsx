@@ -6,8 +6,8 @@ import { socialLinks } from "@/data/navigation";
 
 export default function ContactClient() {
   return (
-    <section className="py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-5 md:px-24">
+    <section className="pt-8 md:pt-16 pb-20 md:pb-28">
+      <div className="max-w-7xl mx-auto px-5 md:px-36">
         {/* Title row: title left, icons right */}
         <FadeIn>
           <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-12 mb-6">
